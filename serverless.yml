@@ -5,14 +5,18 @@ provider:
   runtime: nodejs10.x
   stage: dev
   region: eu-west-2
+  apiKeys:
+    - apikey
 
 functions:
   hello:
     handler: handler.hello
     events:
       - http:
-          path: users/create
+          path: /hello
           method: get
+          cors: true
+          private: true
 # you can add CloudFormation resource templates here
 #resources:
 #  Resources:
