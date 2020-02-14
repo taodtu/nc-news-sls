@@ -1,24 +1,17 @@
 "use strict";
-const { db, dbClincet } = require("./config");
-const { topicData, userData } = require("./data/index");
+const deleteTable = require("./model/deleteTable");
+const seedTable = require("./model/seedTable");
+const createTable = require("./model/createTable");
 
 module.exports.seed = async event => {
   try {
-    await Promise.all(
-      topicData.map(topic =>
-        dbClincet
-          .put({
-            TableName: "topicsTable",
-            Item: { slug: topic.slug, description: topic.description }
-          })
-          .promise()
-      )
-    );
+    await seedTable();
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "internal error"
+        message: "seed table fails",
+        err
       })
     };
   }
@@ -30,28 +23,14 @@ module.exports.seed = async event => {
   };
 };
 module.exports.dropTable = async event => {
-  const tables = ["topicsTable", "usersTable"];
-  const deleteTablePromise = table => {
-    return new Promise((resolve, reject) => {
-      db.deleteTable(
-        {
-          TableName: table
-        },
-        (err, data) => {
-          if (err) return reject(err);
-          resolve(data);
-        }
-      );
-    });
-  };
-
   try {
-    await Promise.all(tables.map(table => deleteTablePromise(table)));
+    await deleteTable();
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "internal error"
+        message: "delete table fails",
+        err
       })
     };
   }
@@ -59,6 +38,25 @@ module.exports.dropTable = async event => {
     statusCode: 200,
     body: JSON.stringify({
       message: "Tables are successfully deleted!"
+    })
+  };
+};
+module.exports.createTable = async event => {
+  try {
+    await createTable();
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "create table fails",
+        err
+      })
+    };
+  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Tables are successfully created!"
     })
   };
 };

@@ -28,6 +28,15 @@ functions:
           cors: true
           private: true
 
+  createTable:
+    handler: handler.createTable
+    events:
+      - http:
+          path: /createTable
+          method: post
+          cors: true
+          private: true
+
 resources: # CloudFormation template syntax from here on.
   Resources:
     topicsTable:
