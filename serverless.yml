@@ -10,12 +10,12 @@ provider:
     - apikey
 
 functions:
-  hello:
-    handler: handler.hello
+  seed:
+    handler: handler.seed
     events:
       - http:
-          path: /hello
-          method: get
+          path: /seed
+          method: post
           cors: true
           private: true
 
