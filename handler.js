@@ -1,14 +1,38 @@
 "use strict";
-const dbClient = require("./config");
+const { db, dbClincet } = require("./config");
+const { topicData, userData } = require("./data/index");
 
 module.exports.seed = async event => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: "Go Serverless v1.0! Your function executed successfully!"
+      message: "Tables are successfully seeded!"
     })
   };
+};
+module.exports.dropTable = async event => {
+  const tables = ["topicsTable", "usersTable"];
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  try {
+    await Promise.all(
+      tables.map(table =>
+        db.deleteTable({
+          TableName: table
+        })
+      )
+    );
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "internal error"
+      })
+    };
+  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Tables are successfully deleted!"
+    })
+  };
 };

@@ -19,6 +19,15 @@ functions:
           cors: true
           private: true
 
+  dropTable:
+    handler: handler.dropTable
+    events:
+      - http:
+          path: /dropTable
+          method: delete
+          cors: true
+          private: true
+
 resources: # CloudFormation template syntax from here on.
   Resources:
     topicsTable:
