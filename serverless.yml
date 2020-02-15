@@ -36,3 +36,12 @@ functions:
           method: post
           cors: true
           private: true
+
+  getTable:
+    handler: handler.getTable
+    events:
+      - http:
+          path: /getTable
+          method: get
+          cors: true
+          private: true

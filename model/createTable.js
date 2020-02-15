@@ -8,8 +8,8 @@ module.exports = async () => {
     ],
     AttributeDefinitions: [{ AttributeName: "slug", AttributeType: "S" }],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
     }
   };
   var paramsUser = {
@@ -19,8 +19,8 @@ module.exports = async () => {
     ],
     AttributeDefinitions: [{ AttributeName: "username", AttributeType: "S" }],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
     }
   };
   const paramsComment = {
@@ -46,8 +46,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 1,
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 100,
+          WriteCapacityUnits: 100
         }
       }
     ],
@@ -64,8 +64,8 @@ module.exports = async () => {
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
     }
   };
   const paramsArticle = {
@@ -93,8 +93,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 1,
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 5,
+          WriteCapacityUnits: 5
         }
       }
     ],
@@ -141,8 +141,8 @@ module.exports = async () => {
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
+      ReadCapacityUnits: 50,
+      WriteCapacityUnits: 50
     }
   };
   const tables = [paramsTopic, paramsUser, paramsComment, paramsArticle];

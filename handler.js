@@ -2,6 +2,7 @@
 const deleteTable = require("./model/deleteTable");
 const seedTable = require("./model/seedTable");
 const createTable = require("./model/createTable");
+const getTable = require("./model/getTable");
 
 module.exports.seed = async event => {
   try {
@@ -59,4 +60,24 @@ module.exports.createTable = async event => {
       message: "Tables are successfully created!"
     })
   };
+};
+
+module.exports.getTable = async event => {
+  try {
+    await getTable();
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "article table is successfully seeded"
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "get table fails",
+        err
+      })
+    };
+  }
 };

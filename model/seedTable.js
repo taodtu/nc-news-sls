@@ -23,7 +23,6 @@ module.exports = async () => {
       })
       .promise()
   );
-  console.log(commentData);
   const commentSeed = commentData.map(
     ({ author, article, created_at, votes, body }) =>
       dbClincet
@@ -33,5 +32,38 @@ module.exports = async () => {
         })
         .promise()
   );
-  return Promise.all([...topicSeed, ...userSeed, ...commentSeed]);
+  await Promise.all([...topicSeed, ...userSeed, ...commentSeed]);
+  const articleDataWithCommentCount = await Promise.all(
+    articleData.map(async article => {
+      const res = await dbClincet
+        .query({
+          TableName: "commentsTable",
+          KeyConditionExpression: "article = :hkey",
+          ExpressionAttributeValues: {
+            ":hkey": article.title
+          }
+        })
+        .promise();
+      return { ...article, comments_count: res.Count };
+    })
+  );
+  await Promise.all(
+    articleDataWithCommentCount.map(
+      ({ author, title, topic, created_at, body, comments_count }) =>
+        dbClincet
+          .put({
+            TableName: "articlesTable",
+            Item: {
+              author,
+              title,
+              topic,
+              created_at,
+              body,
+              comments_count,
+              votes: 0
+            }
+          })
+          .promise()
+    )
+  );
 };
