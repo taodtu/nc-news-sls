@@ -46,8 +46,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 100,
-          WriteCapacityUnits: 100
+          ReadCapacityUnits: 20,
+          WriteCapacityUnits: 20
         }
       }
     ],
@@ -141,8 +141,8 @@ module.exports = async () => {
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 50,
-      WriteCapacityUnits: 50
+      ReadCapacityUnits: 20,
+      WriteCapacityUnits: 20
     }
   };
   const tables = [paramsTopic, paramsUser, paramsComment, paramsArticle];
