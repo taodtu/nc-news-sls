@@ -1,5 +1,10 @@
 const { dbClincet } = require("../config");
-const { topicData, userData } = require("../data/index");
+const {
+  topicData,
+  userData,
+  commentData,
+  articleData
+} = require("../data/index");
 
 module.exports = async () => {
   const topicSeed = topicData.map(({ slug, description }) =>
@@ -18,5 +23,15 @@ module.exports = async () => {
       })
       .promise()
   );
-  return Promise.all([...topicSeed, ...userSeed]);
+  console.log(commentData);
+  const commentSeed = commentData.map(
+    ({ author, article, created_at, votes, body }) =>
+      dbClincet
+        .put({
+          TableName: "commentsTable",
+          Item: { author, article, created_at, votes, body }
+        })
+        .promise()
+  );
+  return Promise.all([...topicSeed, ...userSeed, ...commentSeed]);
 };

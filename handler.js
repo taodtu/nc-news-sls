@@ -2,7 +2,6 @@
 const deleteTable = require("./model/deleteTable");
 const seedTable = require("./model/seedTable");
 const createTable = require("./model/createTable");
-const createArticlesTable = require("./model/createArticlesTable");
 
 module.exports.seed = async event => {
   try {
