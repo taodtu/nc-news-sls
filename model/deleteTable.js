@@ -1,7 +1,12 @@
 const { db } = require("../config");
 
 module.exports = () => {
-  const tables = ["topicsTable", "usersTable", "commentsTable"];
+  const tables = [
+    "topicsTable",
+    "usersTable",
+    "commentsTable",
+    "articlesTable"
+  ];
   const deleteTablePromise = table =>
     new Promise((resolve, reject) => {
       db.deleteTable(
