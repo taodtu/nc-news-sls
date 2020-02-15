@@ -37,32 +37,11 @@ functions:
           cors: true
           private: true
 
-resources: # CloudFormation template syntax from here on.
-  Resources:
-    topicsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: topicsTable
-        AttributeDefinitions:
-          - AttributeName: slug
-            AttributeType: S
-        KeySchema:
-          - AttributeName: slug
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: usersTable
-        AttributeDefinitions:
-          - AttributeName: username
-            AttributeType: S
-        KeySchema:
-          - AttributeName: username
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+  createCommentsTable:
+    handler: handler.createCommentsTable
+    events:
+      - http:
+          path: /createCommentsTable
+          method: post
+          cors: true
+          private: true

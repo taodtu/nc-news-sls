@@ -1,28 +1,6 @@
 const { db } = require("../config");
 
 module.exports = async () => {
-  const paramsTopic = {
-    TableName: "topicsTable",
-    KeySchema: [
-      { AttributeName: "slug", KeyType: "HASH" } //Partition key
-    ],
-    AttributeDefinitions: [{ AttributeName: "slug", AttributeType: "S" }],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  };
-  var paramsUser = {
-    TableName: "usersTable",
-    KeySchema: [
-      { AttributeName: "username", KeyType: "HASH" } //Partition key
-    ],
-    AttributeDefinitions: [{ AttributeName: "username", AttributeType: "S" }],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  };
   const paramsComment = {
     TableName: "commentsTable",
     KeySchema: [
@@ -68,7 +46,6 @@ module.exports = async () => {
       WriteCapacityUnits: 1
     }
   };
-  const tables = [paramsTopic, paramsUser, paramsComment];
   const createTablePromise = params =>
     new Promise((resolve, reject) => {
       db.createTable(params, (err, data) => {
@@ -76,7 +53,5 @@ module.exports = async () => {
         resolve(data);
       });
     });
-  return Promise.all(
-    tables.map(tableParams => createTablePromise(tableParams))
-  );
+  return createTablePromise(paramsComment);
 };
