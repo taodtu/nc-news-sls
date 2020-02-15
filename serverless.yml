@@ -37,11 +37,11 @@ functions:
           cors: true
           private: true
 
-  createCommentsTable:
-    handler: handler.createCommentsTable
+  createArticlesTable:
+    handler: handler.createArticlesTable
     events:
       - http:
-          path: /createCommentsTable
+          path: /createArticlesTable
           method: post
           cors: true
           private: true

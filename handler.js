@@ -2,7 +2,7 @@
 const deleteTable = require("./model/deleteTable");
 const seedTable = require("./model/seedTable");
 const createTable = require("./model/createTable");
-const createCommentsTable = require("./model/createCommentsTable");
+const createArticlesTable = require("./model/createArticlesTable");
 
 module.exports.seed = async event => {
   try {
@@ -62,14 +62,14 @@ module.exports.createTable = async event => {
   };
 };
 
-module.exports.createCommentsTable = async event => {
+module.exports.createArticlesTable = async event => {
   try {
-    await createCommentsTable();
+    await createArticlesTable();
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "create comments table fails",
+        message: "create articles table fails",
         err
       })
     };
@@ -77,7 +77,7 @@ module.exports.createCommentsTable = async event => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: "Comments Table is successfully created!"
+      message: "articles Table is successfully created!"
     })
   };
 };
