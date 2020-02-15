@@ -61,23 +61,3 @@ module.exports.createTable = async event => {
     })
   };
 };
-
-module.exports.createArticlesTable = async event => {
-  try {
-    await createArticlesTable();
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "create articles table fails",
-        err
-      })
-    };
-  }
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "articles Table is successfully created!"
-    })
-  };
-};

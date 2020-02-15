@@ -36,12 +36,3 @@ functions:
           method: post
           cors: true
           private: true
-
-  createArticlesTable:
-    handler: handler.createArticlesTable
-    events:
-      - http:
-          path: /createArticlesTable
-          method: post
-          cors: true
-          private: true
