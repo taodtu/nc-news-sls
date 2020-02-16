@@ -18,5 +18,8 @@
   "homepage": "https://github.com/taodtu/nc-news-sls#readme",
   "dependencies": {
     "aws-sdk": "^2.618.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^5.12.1"
   }
 }

@@ -1,21 +1,22 @@
 "use strict";
 //handlers for topic and user table query
-const getTable = require("./model/getTable");
+const getTopics = require("./model/getTopics");
 
-module.exports.getTable = async event => {
+module.exports.getTopics = async event => {
   try {
-    await getTable();
+    const res = await getTopics();
+    const { Items } = res;
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: "article table is successfully seeded"
+        topics: Items
       })
     };
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "get table fails",
+        message: "get topics fails",
         err
       })
     };

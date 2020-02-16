@@ -1,5 +1,8 @@
 service: nc-news-sls
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs10.x
@@ -37,11 +40,10 @@ functions:
           cors: true
           private: true
 
-  getTable:
-    handler: handler.getTable
+  getTopics:
+    handler: handler.getTopics
     events:
       - http:
-          path: /getTable
+          path: /topics
           method: get
           cors: true
-          private: true
