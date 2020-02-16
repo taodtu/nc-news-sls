@@ -47,3 +47,11 @@ functions:
           path: /topics
           method: get
           cors: true
+
+  getUser:
+    handler: handler.getUser
+    events:
+      - http:
+          path: /users/{username}
+          method: get
+          cors: true
