@@ -46,8 +46,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 20,
-          WriteCapacityUnits: 20
+          ReadCapacityUnits: 50,
+          WriteCapacityUnits: 50
         }
       }
     ],
@@ -64,8 +64,8 @@ module.exports = async () => {
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 5,
-      WriteCapacityUnits: 5
+      ReadCapacityUnits: 50,
+      WriteCapacityUnits: 50
     }
   };
   const paramsArticle = {
@@ -93,8 +93,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 10,
+          WriteCapacityUnits: 10
         }
       }
     ],
@@ -141,8 +141,8 @@ module.exports = async () => {
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 20,
-      WriteCapacityUnits: 20
+      ReadCapacityUnits: 10,
+      WriteCapacityUnits: 10
     }
   };
   const tables = [paramsTopic, paramsUser, paramsComment, paramsArticle];

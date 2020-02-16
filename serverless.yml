@@ -11,7 +11,7 @@ provider:
 
 functions:
   seed:
-    handler: handler.seed
+    handler: handlerTable.seed
     events:
       - http:
           path: /seed
@@ -20,7 +20,7 @@ functions:
           private: true
 
   dropTable:
-    handler: handler.dropTable
+    handler: handlerTable.dropTable
     events:
       - http:
           path: /dropTable
@@ -29,7 +29,7 @@ functions:
           private: true
 
   createTable:
-    handler: handler.createTable
+    handler: handlerTable.createTable
     events:
       - http:
           path: /createTable
