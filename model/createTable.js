@@ -84,10 +84,10 @@ module.exports = async () => {
     ],
     GlobalSecondaryIndexes: [
       {
-        IndexName: "AuthorTitleIndex",
+        IndexName: "AuthorDateIndex",
         KeySchema: [
           { AttributeName: "author", KeyType: "HASH" },
-          { AttributeName: "title", KeyType: "RANGE" }
+          { AttributeName: "created_at", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"

@@ -20,7 +20,6 @@ functions:
           path: /seed
           method: post
           cors: true
-          private: true
 
   dropTable:
     handler: handlerTable.dropTable
@@ -53,5 +52,13 @@ functions:
     events:
       - http:
           path: /users/{username}
+          method: get
+          cors: true
+
+  getArticles:
+    handler: handlerArticle.getArticles
+    events:
+      - http:
+          path: /articles
           method: get
           cors: true
