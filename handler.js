@@ -6,10 +6,14 @@ const getUser = require("./model/getUser");
 module.exports.getTopics = async event => {
   try {
     const { Items } = await getTopics();
+    const res = Items.map(topic => {
+      const { slug, sk } = topic;
+      return { slug, description: sk };
+    });
     return {
       statusCode: 200,
       body: JSON.stringify({
-        topics: Items
+        topics: res
       })
     };
   } catch (err) {
