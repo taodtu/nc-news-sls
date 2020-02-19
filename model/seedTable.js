@@ -6,25 +6,7 @@ const {
   articleData
 } = require("../data/index");
 
-const format = (arr1, arr2, name, id, keyToChange) => {
-  const lookUp = arr1.reduce((acc, cur) => {
-    acc[cur[name]] = cur[id];
-    return acc;
-  }, {});
-  return arr2.map(e => {
-    const { [keyToChange]: keyToChanges, ...rest } = e;
-    return { ...rest, [id]: lookUp[e[keyToChange]] };
-  });
-};
-
 module.exports = async () => {
-  const formattedCommentData = format(
-    articleData,
-    commentData,
-    "title",
-    "article_id",
-    "belongs_to"
-  );
   //change the batchWriteItem method into promise based
   const seedTablePromise = params =>
     new Promise((resolve, reject) => {
@@ -34,27 +16,34 @@ module.exports = async () => {
       });
     });
 
-  const paramsTopic = {
+  const paramsTopicAndUser = {
     RequestItems: {
       NcNewsTable: [
-        {
+        ...topicData.map(topic => ({
           PutRequest: {
             Item: {
-              pk: {
-                S: "Amazon DynamoDB"
-              },
-              sk: {
-                S: "Amazon Web Services"
-              }
+              pk: { S: "Topic" },
+              sk: { S: topic.description },
+              slug: { S: topic.slug }
             }
           }
-        }
+        })),
+        ...userData.map(user => ({
+          PutRequest: {
+            Item: {
+              pk: { S: "User" },
+              sk: { S: user.name },
+              username: { S: user.username },
+              avatar_url: { S: user.avatar_url }
+            }
+          }
+        }))
       ]
     },
     ReturnConsumedCapacity: "TOTAL"
   };
 
-  return seedTablePromise(paramsTopic);
+  await seedTablePromise(paramsTopicAndUser);
 
   /*const topicSeed = topicData.map(({ slug, description }) =>
     dbClincet

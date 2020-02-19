@@ -1,4 +1,15 @@
-exports.commentData = require("./comments").map(comment => {
+const format = (arr1, arr2, name, id, keyToChange) => {
+  const lookUp = arr1.reduce((acc, cur) => {
+    acc[cur[name]] = cur[id];
+    return acc;
+  }, {});
+  return arr2.map(e => {
+    const { [keyToChange]: keyToChanges, ...rest } = e;
+    return { ...rest, [id]: lookUp[e[keyToChange]] };
+  });
+};
+
+const comment = require("./comments").map(comment => {
   const { created_at, created_by, ...rest } = comment;
   return {
     ...rest,
@@ -14,5 +25,12 @@ exports.articleData = require("./articles").map((article, index) => {
     article_id: index
   };
 });
+exports.commentData = format(
+  articleData,
+  comment,
+  "title",
+  "article_id",
+  "belongs_to"
+);
 exports.topicData = require("./topics");
 exports.userData = require("./users");
