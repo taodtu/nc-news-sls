@@ -10,21 +10,21 @@ module.exports = async () => {
     AttributeDefinitions: [
       { AttributeName: "pk", AttributeType: "S" },
       { AttributeName: "sk", AttributeType: "S" },
-      { AttributeName: "gsi-1pk", AttributeType: "S" },
-      { AttributeName: "gsi-2pk", AttributeType: "S" },
-      { AttributeName: "gsi-3pk", AttributeType: "S" },
-      { AttributeName: "gsi-4pk", AttributeType: "S" },
-      { AttributeName: "gsi-1sk", AttributeType: "S" },
-      { AttributeName: "gsi-2sk", AttributeType: "S" },
-      { AttributeName: "gsi-3sk", AttributeType: "S" },
-      { AttributeName: "gsi-4sk", AttributeType: "S" }
+      { AttributeName: "gsi_1pk", AttributeType: "S" },
+      { AttributeName: "gsi_2pk", AttributeType: "S" },
+      { AttributeName: "gsi_3pk", AttributeType: "S" },
+      { AttributeName: "gsi_4pk", AttributeType: "S" },
+      { AttributeName: "gsi_1sk", AttributeType: "S" },
+      { AttributeName: "gsi_2sk", AttributeType: "S" },
+      { AttributeName: "gsi_3sk", AttributeType: "S" },
+      { AttributeName: "gsi_4sk", AttributeType: "S" }
     ],
     GlobalSecondaryIndexes: [
       {
         IndexName: "GSI-1",
         KeySchema: [
-          { AttributeName: "gsi-1pk", KeyType: "HASH" },
-          { AttributeName: "gsi-1sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_1pk", KeyType: "HASH" },
+          { AttributeName: "gsi_1sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"
@@ -37,8 +37,8 @@ module.exports = async () => {
       {
         IndexName: "GSI-2",
         KeySchema: [
-          { AttributeName: "gsi-2pk", KeyType: "HASH" },
-          { AttributeName: "gsi-2sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_2pk", KeyType: "HASH" },
+          { AttributeName: "gsi_2sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"
@@ -51,8 +51,8 @@ module.exports = async () => {
       {
         IndexName: "GSI-3",
         KeySchema: [
-          { AttributeName: "gsi-3pk", KeyType: "HASH" },
-          { AttributeName: "gsi-3sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_3pk", KeyType: "HASH" },
+          { AttributeName: "gsi_3sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"
@@ -65,8 +65,8 @@ module.exports = async () => {
       {
         IndexName: "GSI-4",
         KeySchema: [
-          { AttributeName: "gsi-4pk", KeyType: "HASH" },
-          { AttributeName: "gsi-4sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_4pk", KeyType: "HASH" },
+          { AttributeName: "gsi_4sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"

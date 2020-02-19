@@ -15,7 +15,7 @@ module.exports = async () => {
         resolve(data);
       });
     });
-
+  /*
   const paramsTopicAndUser = {
     RequestItems: {
       NcNewsTable: [
@@ -45,7 +45,7 @@ module.exports = async () => {
 
   await seedTablePromise(paramsTopicAndUser);
   // batchWriteItem can wirte max 25 request so this array is divided
-  /*const articleInput = articleData.reduce(
+  const articleInput = articleData.reduce(
     (a, article, index) => {
       const { topic, author, votes, created_at, ...rest } = article;
       const item1 = {
@@ -114,29 +114,14 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  } 
+  } */
   // batchWriteItem can wirte max 25 request so this array is divided
   const commentInput = commentData.reduce(
     (a, comment, index) => {
-      const { author, article_id, ...rest } = comment;
-      const item1 = {
-        ...rest,
-        sk: author,
-        data: comment.created_at,
-        article_id,
-        author
-      };
-      const item2 = {
-        ...rest,
-        sk: article_id,
-        data: comment.created_at,
-        author,
-        article_id
-      };
-      a[Math.floor((index + 1) / 11)].push(item1, item2);
+      a[Math.floor((index + 1) / 22)].push(comment);
       return a;
     },
-    [...Array(Math.ceil(commentData.length / 11))].map(e => [])
+    [...Array(Math.ceil(commentData.length / 22))].map(e => [])
   );
   //seed comment data
   for (let i = 0; i < commentInput.length; i++) {
@@ -146,9 +131,12 @@ module.exports = async () => {
           ...commentInput[i].map(comment => ({
             PutRequest: {
               Item: {
-                pk: { S: `comment#${comment.created_at}` },
-                sk: { S: comment.sk },
-                data: { S: comment.data },
+                pk: { S: `comment` },
+                sk: { S: comment.created_at },
+                gsi_1pk: { S: "commentsAuthor" },
+                gsi_1sk: { S: `${comment.author}#${comment.created_at}` },
+                gsi_2pk: { S: "commentsAuthor" },
+                gsi_2sk: { S: `${comment.article_id}#${comment.created_at}` },
                 votes: { S: `${comment.votes}` },
                 body: { S: comment.body },
                 article_id: { S: comment.article_id },
@@ -161,5 +149,5 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  }*/
+  }
 };
