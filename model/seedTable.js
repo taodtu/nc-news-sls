@@ -45,63 +45,75 @@ module.exports = async () => {
 
   await seedTablePromise(paramsTopicAndUser);
 
-  /*const topicSeed = topicData.map(({ slug, description }) =>
-    dbClincet
-      .put({
-        TableName: "topicsTable",
-        Item: { slug, description }
-      })
-      .promise()
+  // batchWriteItem can wirte max 25 request so this array is divided
+  const articleInput = articleData.reduce(
+    (a, article, index) => {
+      const { topic, author, votes, created_at, ...rest } = article;
+      const item1 = {
+        ...rest,
+        sk: "topicDate",
+        data: `${topic}#${created_at}`,
+        topic,
+        author,
+        votes,
+        created_at
+      };
+      const item2 = {
+        ...rest,
+        sk: "topicVote",
+        data: `${topic}#${votes}`,
+        topic,
+        author,
+        votes,
+        created_at
+      };
+      const item3 = {
+        ...rest,
+        sk: "topicAuthor",
+        data: `${topic}#${author}`,
+        topic,
+        author,
+        votes,
+        created_at
+      };
+      const item4 = {
+        ...rest,
+        sk: "author",
+        data: author,
+        topic,
+        author,
+        votes,
+        created_at
+      };
+      a[Math.floor(((index + 1) * 4) / 22)].push(item1, item2, item3, item4);
+      return a;
+    },
+    [...Array(Math.ceil((articleData.length * 4) / 22))].map(e => [])
   );
-  const userSeed = userData.map(({ username, name, avatar_url }) =>
-    dbClincet
-      .put({
-        TableName: "usersTable",
-        Item: { username, name, avatar_url }
-      })
-      .promise()
-  );
-  const commentSeed = commentData.map(
-    ({ author, article, created_at, votes, body }) =>
-      dbClincet
-        .put({
-          TableName: "commentsTable",
-          Item: { author, article, created_at, votes, body }
-        })
-        .promise()
-  );
-  await Promise.all([...topicSeed, ...userSeed, ...commentSeed]);
-  const articleDataWithCommentCount = await Promise.all(
-    articleData.map(async article => {
-      const res = await dbClincet
-        .query({
-          TableName: "commentsTable",
-          KeyConditionExpression: "article = :hkey",
-          ExpressionAttributeValues: {
-            ":hkey": article.title
-          }
-        })
-        .promise();
-      return { ...article, comments_count: res.Count };
-    })
-  );
-  await Promise.all(
-    articleDataWithCommentCount.map(
-      ({ author, title, topic, created_at, body, comments_count }) =>
-        dbClincet
-          .put({
-            TableName: "articlesTable",
-            Item: {
-              author,
-              title,
-              topic,
-              created_at,
-              body,
-              comments_count,
-              votes: 0
+  //seed article data
+  for (let i = 0; i < articleInput.length; i++) {
+    const params = {
+      RequestItems: {
+        NcNewsTable: [
+          ...articleInput[i].map(article => ({
+            PutRequest: {
+              Item: {
+                pk: { S: `${article.article_id}` },
+                sk: { S: article.sk },
+                data: { S: article.data },
+                topic: { S: article.topic },
+                author: { S: article.author },
+                votes: { S: `${article.votes}` },
+                created_at: { S: article.created_at },
+                title: { S: article.title },
+                body: { S: article.body }
+              }
             }
-          })
-          .promise()
-    )
-  );*/
+          }))
+        ]
+      },
+      ReturnConsumedCapacity: "TOTAL"
+    };
+    await seedTablePromise(params);
+  }
 };
