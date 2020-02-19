@@ -15,7 +15,7 @@ module.exports = async () => {
         resolve(data);
       });
     });
-
+  /*
   const paramsTopicAndUser = {
     RequestItems: {
       NcNewsTable: [
@@ -98,7 +98,7 @@ module.exports = async () => {
           ...articleInput[i].map(article => ({
             PutRequest: {
               Item: {
-                pk: { S: `${article.article_id}` },
+                pk: { S: `article#${article.article_id}` },
                 sk: { S: article.sk },
                 data: { S: article.data },
                 topic: { S: article.topic },
@@ -115,5 +115,6 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  }
+  }*/
+  console.log(commentData);
 };
