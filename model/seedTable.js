@@ -32,8 +32,8 @@ module.exports = async () => {
           PutRequest: {
             Item: {
               pk: { S: "User" },
-              sk: { S: user.name },
-              username: { S: user.username },
+              sk: { S: user.username },
+              name: { S: user.name },
               avatar_url: { S: user.avatar_url }
             }
           }
@@ -44,7 +44,6 @@ module.exports = async () => {
   };
 
   await seedTablePromise(paramsTopicAndUser);
-
   // batchWriteItem can wirte max 25 request so this array is divided
   const articleInput = articleData.reduce(
     (a, article, index) => {

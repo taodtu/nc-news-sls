@@ -30,21 +30,23 @@ module.exports.getTopics = async event => {
 module.exports.getUser = async event => {
   const { username } = event.pathParameters;
   try {
-    const { Item } = await getUser(username);
-    if (!Item)
+    const { Items } = await getUser(username);
+    if (!Items[0])
       return {
         statusCode: 404,
         body: JSON.stringify({
           message: "user not found"
         })
       };
-    else
+    else {
+      const { sk, avatar_url, name } = Items[0];
       return {
         statusCode: 200,
         body: JSON.stringify({
-          user: Item
+          user: { avatar_url, name, username: sk }
         })
       };
+    }
   } catch (err) {
     return {
       statusCode: 500,
