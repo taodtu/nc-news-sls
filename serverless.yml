@@ -62,3 +62,11 @@ functions:
           path: /articles
           method: get
           cors: true
+
+  getComments:
+    handler: handlerComment.getComments
+    events:
+      - http:
+          path: /comments
+          method: get
+          cors: true

@@ -17,7 +17,7 @@ const articleData = article.map((article, index) => {
   return {
     ...rest,
     created_at: new Date(article["created_at"]).toISOString(),
-    article_id: `article#${index}`,
+    article_id: `article_id${index}`,
     votes: Math.floor(Math.random() * Math.floor(20))
   };
 });

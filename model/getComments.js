@@ -8,6 +8,7 @@ module.exports = queryPamas =>
       KeyConditionExpression: "sk = :pkey",
       ExpressionAttributeValues: {
         ":pkey": queryPamas
-      }
+      },
+      ScanIndexForward: false
     })
     .promise();
