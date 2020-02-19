@@ -15,7 +15,7 @@ module.exports = async () => {
         resolve(data);
       });
     });
-  /*
+
   const paramsTopicAndUser = {
     RequestItems: {
       NcNewsTable: [
@@ -45,7 +45,7 @@ module.exports = async () => {
 
   await seedTablePromise(paramsTopicAndUser);
   // batchWriteItem can wirte max 25 request so this array is divided
-  const articleInput = articleData.reduce(
+  /*  const articleInput = articleData.reduce(
     (a, article, index) => {
       const { topic, author, votes, created_at, ...rest } = article;
       const item1 = {
@@ -135,7 +135,7 @@ module.exports = async () => {
                 sk: { S: comment.created_at },
                 gsi_1pk: { S: "commentsAuthor" },
                 gsi_1sk: { S: `${comment.author}#${comment.created_at}` },
-                gsi_2pk: { S: "commentsAuthor" },
+                gsi_2pk: { S: "commentsArticle" },
                 gsi_2sk: { S: `${comment.article_id}#${comment.created_at}` },
                 votes: { S: `${comment.votes}` },
                 body: { S: comment.body },
