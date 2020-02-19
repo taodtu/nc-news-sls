@@ -10,14 +10,63 @@ module.exports = async () => {
     AttributeDefinitions: [
       { AttributeName: "pk", AttributeType: "S" },
       { AttributeName: "sk", AttributeType: "S" },
-      { AttributeName: "data", AttributeType: "S" }
+      { AttributeName: "gsi-1pk", AttributeType: "S" },
+      { AttributeName: "gsi-2pk", AttributeType: "S" },
+      { AttributeName: "gsi-3pk", AttributeType: "S" },
+      { AttributeName: "gsi-4pk", AttributeType: "S" },
+      { AttributeName: "gsi-1sk", AttributeType: "S" },
+      { AttributeName: "gsi-2sk", AttributeType: "S" },
+      { AttributeName: "gsi-3sk", AttributeType: "S" },
+      { AttributeName: "gsi-4sk", AttributeType: "S" }
     ],
     GlobalSecondaryIndexes: [
       {
         IndexName: "GSI-1",
         KeySchema: [
-          { AttributeName: "sk", KeyType: "HASH" },
-          { AttributeName: "data", KeyType: "RANGE" }
+          { AttributeName: "gsi-1pk", KeyType: "HASH" },
+          { AttributeName: "gsi-1sk", KeyType: "RANGE" }
+        ],
+        Projection: {
+          ProjectionType: "ALL"
+        },
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 5,
+          WriteCapacityUnits: 5
+        }
+      },
+      {
+        IndexName: "GSI-2",
+        KeySchema: [
+          { AttributeName: "gsi-2pk", KeyType: "HASH" },
+          { AttributeName: "gsi-2sk", KeyType: "RANGE" }
+        ],
+        Projection: {
+          ProjectionType: "ALL"
+        },
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 5,
+          WriteCapacityUnits: 5
+        }
+      },
+      {
+        IndexName: "GSI-3",
+        KeySchema: [
+          { AttributeName: "gsi-3pk", KeyType: "HASH" },
+          { AttributeName: "gsi-3sk", KeyType: "RANGE" }
+        ],
+        Projection: {
+          ProjectionType: "ALL"
+        },
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 5,
+          WriteCapacityUnits: 5
+        }
+      },
+      {
+        IndexName: "GSI-4",
+        KeySchema: [
+          { AttributeName: "gsi-4pk", KeyType: "HASH" },
+          { AttributeName: "gsi-4sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"

@@ -45,7 +45,7 @@ module.exports = async () => {
 
   await seedTablePromise(paramsTopicAndUser);
   // batchWriteItem can wirte max 25 request so this array is divided
-  const articleInput = articleData.reduce(
+  /*const articleInput = articleData.reduce(
     (a, article, index) => {
       const { topic, author, votes, created_at, ...rest } = article;
       const item1 = {
@@ -89,7 +89,7 @@ module.exports = async () => {
     },
     [...Array(Math.ceil((articleData.length * 4) / 22))].map(e => [])
   );
-  //seed article data
+  //seed article data 
   for (let i = 0; i < articleInput.length; i++) {
     const params = {
       RequestItems: {
@@ -97,7 +97,7 @@ module.exports = async () => {
           ...articleInput[i].map(article => ({
             PutRequest: {
               Item: {
-                pk: { S: `article#${article.article_id}` },
+                pk: { S: article.article_id },
                 sk: { S: article.sk },
                 data: { S: article.data },
                 topic: { S: article.topic },
@@ -114,7 +114,7 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  }
+  } 
   // batchWriteItem can wirte max 25 request so this array is divided
   const commentInput = commentData.reduce(
     (a, comment, index) => {
@@ -161,5 +161,5 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  }
+  }*/
 };
