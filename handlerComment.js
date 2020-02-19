@@ -3,8 +3,7 @@
 const getComments = require("./model/getComments");
 
 module.exports.getComments = async event => {
-  const { author, article_id } = event.queryStringParameters;
-  if (!author && !article_id)
+  if (!event.queryStringParameters)
     return {
       statusCode: 400,
       body: JSON.stringify({
@@ -12,6 +11,7 @@ module.exports.getComments = async event => {
       })
     };
   try {
+    const { author, article_id } = event.queryStringParameters;
     const { Items } = await getComments({ author, article_id });
     if (!Items[0])
       return {

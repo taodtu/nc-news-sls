@@ -64,18 +64,14 @@ module.exports = async () => {
                 sk: { S: article.created_at },
                 topic: { S: article.topic },
                 author: { S: article.author },
-                votes: { S: `${article.votes}` },
-                created_at: { S: article.created_at },
+                votes: { N: `${article.votes}` },
                 title: { S: article.title },
                 body: { S: article.body },
-                gsi_1pk: { S: "articleVote" },
-                gsi_1sk: { S: `${article.votes}` },
-                gsi_2pk: { S: "articlesAuthorDate" },
-                gsi_2sk: { S: `${article.author}#${article.created_at}` },
-                gsi_3pk: { S: "articlesTopicDate" },
-                gsi_3sk: { S: `${article.topic}#${article.created_at}` },
-                gsi_4pk: { S: "articlesTopicVote" },
-                gsi_4sk: { S: `${article.topic}#${article.votes}` }
+                gsi_pk: { S: "articleIndex" },
+                gsi_1sk: { S: article.created_at },
+                gsi_2sk: { S: `${article.topic}#${article.created_at}` },
+                gsi_3sk: { S: `${article.topic}#${article.votes}` },
+                gsi_4sk: { S: `${article.author}#${article.created_at}` }
               }
             }
           }))
@@ -103,9 +99,8 @@ module.exports = async () => {
               Item: {
                 pk: { S: `comment` },
                 sk: { S: comment.created_at },
-                gsi_1pk: { S: "commentsAuthor" },
+                gsi_1pk: { S: "commentIndex" },
                 gsi_1sk: { S: `${comment.author}#${comment.created_at}` },
-                gsi_2pk: { S: "commentsArticle" },
                 gsi_2sk: { S: `${comment.article_id}#${comment.created_at}` },
                 votes: { S: `${comment.votes}` },
                 body: { S: comment.body },

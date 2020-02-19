@@ -1,30 +1,29 @@
 "use strict";
 //handlers for article query
-const getArticlesByTopic = require("./model/getArticlesByTopic");
-const getArticlesByAuthor = require("./model/getArticlesByAuthor");
+const { getAllArticles, getArticlesBy } = require("./model/getArticles");
 
 module.exports.getArticles = async event => {
-  const { topic, author } = event.queryStringParameters;
+  if (!event.queryStringParameters)
+    try {
+      const { Items } = await getAllArticles();
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          articles: Items
+        })
+      };
+    } catch (err) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: "get Articles fails",
+          err
+        })
+      };
+    }
+  const { order_by, author, topic } = event.queryStringParameters;
   try {
-    if (author) {
-      const Items = await getArticlesByAuthor({ author });
-      return {
-        statusCode: 200,
-        body: JSON.stringify({
-          articles: Items
-        })
-      };
-    }
-    if (topic) {
-      const Items = await getArticlesByTopic({ topic });
-      return {
-        statusCode: 200,
-        body: JSON.stringify({
-          articles: Items
-        })
-      };
-    }
-    const Items = await getArticles({});
+    const { Items } = await getArticlesBy({ order_by, author, topic });
     return {
       statusCode: 200,
       body: JSON.stringify({
