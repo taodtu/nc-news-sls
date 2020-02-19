@@ -1,4 +1,4 @@
-const { dbClincet } = require("../config");
+const { db } = require("../config");
 const {
   topicData,
   userData,
@@ -25,6 +25,36 @@ module.exports = async () => {
     "article_id",
     "belongs_to"
   );
+  //change the batchWriteItem method into promise based
+  const seedTablePromise = params =>
+    new Promise((resolve, reject) => {
+      db.batchWriteItem(params, (err, data) => {
+        if (err) return reject(err);
+        resolve(data);
+      });
+    });
+
+  const paramsTopic = {
+    RequestItems: {
+      NcNewsTable: [
+        {
+          PutRequest: {
+            Item: {
+              pk: {
+                S: "Amazon DynamoDB"
+              },
+              sk: {
+                S: "Amazon Web Services"
+              }
+            }
+          }
+        }
+      ]
+    },
+    ReturnConsumedCapacity: "TOTAL"
+  };
+
+  return seedTablePromise(paramsTopic);
 
   /*const topicSeed = topicData.map(({ slug, description }) =>
     dbClincet
