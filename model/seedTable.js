@@ -116,5 +116,51 @@ module.exports = async () => {
     };
     await seedTablePromise(params);
   }*/
-  console.log(commentData);
+  // batchWriteItem can wirte max 25 request so this array is divided
+  const commentInput = commentData.reduce(
+    (a, comment, index) => {
+      const { author, article_id, ...rest } = comment;
+      const item1 = {
+        ...rest,
+        sk: author,
+        data: comment.created_at,
+        article_id,
+        author
+      };
+      const item2 = {
+        ...rest,
+        sk: article_id,
+        data: comment.created_at,
+        author,
+        article_id
+      };
+      a[Math.floor((index + 1) / 11)].push(item1, item2);
+      return a;
+    },
+    [...Array(Math.ceil(commentData.length / 11))].map(e => [])
+  );
+  //seed comment data
+  for (let i = 0; i < commentInput.length; i++) {
+    const params = {
+      RequestItems: {
+        NcNewsTable: [
+          ...commentInput[i].map(comment => ({
+            PutRequest: {
+              Item: {
+                pk: { S: `comment#${comment.created_at}` },
+                sk: { S: comment.sk },
+                data: { S: comment.data },
+                votes: { S: `${comment.votes}` },
+                body: { S: comment.body },
+                article_id: { S: comment.article_id },
+                author: { S: comment.author }
+              }
+            }
+          }))
+        ]
+      },
+      ReturnConsumedCapacity: "TOTAL"
+    };
+    await seedTablePromise(params);
+  }
 };
