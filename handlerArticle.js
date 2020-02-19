@@ -6,15 +6,6 @@ const getArticlesByAuthor = require("./model/getArticlesByAuthor");
 module.exports.getArticles = async event => {
   const { topic, author } = event.queryStringParameters;
   try {
-    if (topic) {
-      const Items = await getArticlesByTopic({ topic });
-      return {
-        statusCode: 200,
-        body: JSON.stringify({
-          articles: Items
-        })
-      };
-    }
     if (author) {
       const Items = await getArticlesByAuthor({ author });
       return {
@@ -24,6 +15,22 @@ module.exports.getArticles = async event => {
         })
       };
     }
+    if (topic) {
+      const Items = await getArticlesByTopic({ topic });
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          articles: Items
+        })
+      };
+    }
+    const Items = await getArticles({});
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        articles: Items
+      })
+    };
   } catch (err) {
     return {
       statusCode: 500,
