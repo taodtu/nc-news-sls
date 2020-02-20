@@ -1,32 +1,19 @@
 const { dbClincet } = require("../config");
 
-module.exports.getAllArticles = () =>
-  dbClincet
-    .query({
-      TableName: "NcNewsTable",
-      IndexName: "GSI-1",
-      KeyConditionExpression: "gsi_pk = :pkey",
-      ExpressionAttributeValues: {
-        ":pkey": "articleIndex"
-      },
-      ScanIndexForward: false
-    })
-    .promise();
-
-module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
-  if (!sort_by && !author && !topic)
+module.exports.getAllArticles = ({ sort_by, order = "desc" }) => {
+  if (!sort_by)
     return dbClincet
       .query({
         TableName: "NcNewsTable",
-        IndexName: "GSI-5",
+        IndexName: "GSI-1",
         KeyConditionExpression: "gsi_pk = :pkey",
         ExpressionAttributeValues: {
           ":pkey": "articleIndex"
         },
-        ScanIndexForward: order === "desc"
+        ScanIndexForward: order !== "desc"
       })
       .promise();
-  if (sort_by && !author && !topic)
+  else
     return dbClincet
       .query({
         TableName: "NcNewsTable",
@@ -38,6 +25,9 @@ module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
         ScanIndexForward: order !== "desc"
       })
       .promise();
+};
+
+module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
   if (!sort_by && topic)
     return dbClincet
       .query({
