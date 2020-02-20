@@ -14,7 +14,6 @@ module.exports.getArticles = async event => {
   const { sort_by, author, topic, order } = event.queryStringParameters;
   if (!author && !topic)
     try {
-      console.log("hhh");
       const { Items } = await getAllArticles({ sort_by, order });
       return {
         statusCode: 200,
