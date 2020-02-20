@@ -53,7 +53,8 @@ module.exports = async () => {
           { AttributeName: "gsi_3sk", KeyType: "RANGE" }
         ],
         Projection: {
-          ProjectionType: "ALL"
+          NonKeyAttributes: ["author", "title", "body"],
+          ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
           ReadCapacityUnits: 5,
@@ -67,7 +68,8 @@ module.exports = async () => {
           { AttributeName: "gsi_4sk", KeyType: "RANGE" }
         ],
         Projection: {
-          ProjectionType: "ALL"
+          NonKeyAttributes: ["votes", "title", "body", "topic"],
+          ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
           ReadCapacityUnits: 5,
@@ -81,7 +83,8 @@ module.exports = async () => {
           { AttributeName: "votes", KeyType: "RANGE" }
         ],
         Projection: {
-          ProjectionType: "ALL"
+          NonKeyAttributes: ["author", "title", "body", "topic"],
+          ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
           ReadCapacityUnits: 5,

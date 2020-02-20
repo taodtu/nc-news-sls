@@ -21,9 +21,9 @@ module.exports.getArticles = async event => {
         })
       };
     }
-  const { order_by, author, topic } = event.queryStringParameters;
+  const { sort_by, author, topic, order } = event.queryStringParameters;
   try {
-    const { Items } = await getArticlesBy({ order_by, author, topic });
+    const { Items } = await getArticlesBy({ sort_by, author, topic, order });
     return {
       statusCode: 200,
       body: JSON.stringify({
