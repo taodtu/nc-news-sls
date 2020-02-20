@@ -12,9 +12,10 @@ module.exports.getArticles = async event => {
     };
 
   const { sort_by, author, topic, order } = event.queryStringParameters;
-  if (!author && !order)
+  if (!author && !topic)
     try {
-      const { Items } = await getArticles({ sort_by, order });
+      console.log("hhh");
+      const { Items } = await getAllArticles({ sort_by, order });
       return {
         statusCode: 200,
         body: JSON.stringify({
