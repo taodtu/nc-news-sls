@@ -12,6 +12,7 @@ module.exports = async () => {
       { AttributeName: "sk", AttributeType: "S" },
       { AttributeName: "gsi_pk", AttributeType: "S" },
       { AttributeName: "gsi_sk", AttributeType: "S" },
+      { AttributeName: "gsi_2sk", AttributeType: "S" },
       { AttributeName: "votes", AttributeType: "N" },
       { AttributeName: "topic", AttributeType: "S" }
     ],
@@ -20,7 +21,7 @@ module.exports = async () => {
         IndexName: "GSI-1",
         KeySchema: [
           { AttributeName: "gsi_pk", KeyType: "HASH" },
-          { AttributeName: "sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_2sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"

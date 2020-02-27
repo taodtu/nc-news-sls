@@ -68,7 +68,8 @@ module.exports = async () => {
                 title: { S: article.title },
                 body: { S: article.body },
                 gsi_pk: { S: "articleIndex" },
-                gsi_sk: { S: `${article.author}#${article.created_at}` }
+                gsi_sk: { S: `${article.author}#${article.created_at}` },
+                gsi_2sk: { S: article.created_at }
               }
             }
           }))
@@ -79,7 +80,7 @@ module.exports = async () => {
     await seedTablePromise(params);
   }
   // batchWriteItem can wirte max 25 request so this array is divided
-  /* const commentInput = commentData.reduce(
+  const commentInput = commentData.reduce(
     (a, comment, index) => {
       a[Math.floor((index + 1) / 22)].push(comment);
       return a;
@@ -96,10 +97,10 @@ module.exports = async () => {
               Item: {
                 pk: { S: `comment` },
                 sk: { S: comment.created_at },
-                gsi_1pk: { S: "commentIndex" },
-                gsi_1sk: { S: `${comment.author}#${comment.created_at}` },
+                gsi_pk: { S: "commentIndex" },
+                gsi_sk: { S: `${comment.author}#${comment.created_at}` },
                 gsi_2sk: { S: `${comment.article_id}#${comment.created_at}` },
-                votes: { S: `${comment.votes}` },
+                votes: { N: `${comment.votes}` },
                 body: { S: comment.body },
                 article_id: { S: comment.article_id },
                 author: { S: comment.author }
@@ -111,5 +112,5 @@ module.exports = async () => {
       ReturnConsumedCapacity: "TOTAL"
     };
     await seedTablePromise(params);
-  }*/
+  }
 };

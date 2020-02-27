@@ -5,11 +5,10 @@ module.exports = ({ author, article_id }) => {
     return dbClincet
       .query({
         TableName: "NcNewsTable",
-        IndexName: "GSI-1",
-        KeyConditionExpression:
-          "gsi_1pk = :pkey and begins_with(gsi_1sk, :skey)",
+        IndexName: "GSI-4",
+        KeyConditionExpression: "gsi_pk = :pkey and begins_with(gsi_sk, :skey)",
         ExpressionAttributeValues: {
-          ":pkey": "commentsAuthor",
+          ":pkey": "commentIndex",
           ":skey": `${author}#`
         },
         ScanIndexForward: false
@@ -19,11 +18,11 @@ module.exports = ({ author, article_id }) => {
     return dbClincet
       .query({
         TableName: "NcNewsTable",
-        IndexName: "GSI-2",
+        IndexName: "GSI-1",
         KeyConditionExpression:
-          "gsi_2pk = :pkey and begins_with(gsi_2sk, :skey)",
+          "gsi_pk = :pkey and begins_with(gsi_2sk, :skey)",
         ExpressionAttributeValues: {
-          ":pkey": "commentsArticle",
+          ":pkey": "commentIndex",
           ":skey": `${article_id}#`
         },
         ScanIndexForward: false
