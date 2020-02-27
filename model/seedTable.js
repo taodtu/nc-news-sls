@@ -68,10 +68,7 @@ module.exports = async () => {
                 title: { S: article.title },
                 body: { S: article.body },
                 gsi_pk: { S: "articleIndex" },
-                gsi_1sk: { S: article.created_at },
-                gsi_2sk: { S: `${article.topic}#${article.created_at}` },
-                gsi_3sk: { S: `${article.topic}#${article.votes}` },
-                gsi_4sk: { S: `${article.author}#${article.created_at}` }
+                gsi_sk: { S: `${article.author}#${article.created_at}` }
               }
             }
           }))

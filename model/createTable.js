@@ -11,18 +11,16 @@ module.exports = async () => {
       { AttributeName: "pk", AttributeType: "S" },
       { AttributeName: "sk", AttributeType: "S" },
       { AttributeName: "gsi_pk", AttributeType: "S" },
-      { AttributeName: "gsi_1sk", AttributeType: "S" },
-      { AttributeName: "gsi_2sk", AttributeType: "S" },
-      { AttributeName: "gsi_3sk", AttributeType: "S" },
-      { AttributeName: "gsi_4sk", AttributeType: "S" },
-      { AttributeName: "votes", AttributeType: "N" }
+      { AttributeName: "gsi_sk", AttributeType: "S" },
+      { AttributeName: "votes", AttributeType: "N" },
+      { AttributeName: "topic", AttributeType: "S" }
     ],
     GlobalSecondaryIndexes: [
       {
         IndexName: "GSI-1",
         KeySchema: [
           { AttributeName: "gsi_pk", KeyType: "HASH" },
-          { AttributeName: "gsi_1sk", KeyType: "RANGE" }
+          { AttributeName: "sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"
@@ -35,8 +33,8 @@ module.exports = async () => {
       {
         IndexName: "GSI-2",
         KeySchema: [
-          { AttributeName: "gsi_pk", KeyType: "HASH" },
-          { AttributeName: "gsi_2sk", KeyType: "RANGE" }
+          { AttributeName: "topic", KeyType: "HASH" },
+          { AttributeName: "sk", KeyType: "RANGE" }
         ],
         Projection: {
           ProjectionType: "ALL"
@@ -49,8 +47,8 @@ module.exports = async () => {
       {
         IndexName: "GSI-3",
         KeySchema: [
-          { AttributeName: "gsi_pk", KeyType: "HASH" },
-          { AttributeName: "gsi_3sk", KeyType: "RANGE" }
+          { AttributeName: "topic", KeyType: "HASH" },
+          { AttributeName: "votes", KeyType: "RANGE" }
         ],
         Projection: {
           NonKeyAttributes: ["author", "title", "body"],
@@ -65,7 +63,7 @@ module.exports = async () => {
         IndexName: "GSI-4",
         KeySchema: [
           { AttributeName: "gsi_pk", KeyType: "HASH" },
-          { AttributeName: "gsi_4sk", KeyType: "RANGE" }
+          { AttributeName: "gsi_sk", KeyType: "RANGE" }
         ],
         Projection: {
           NonKeyAttributes: ["votes", "title", "body", "topic"],

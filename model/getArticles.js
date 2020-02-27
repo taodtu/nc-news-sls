@@ -33,9 +33,9 @@ module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
       .query({
         TableName: "NcNewsTable",
         IndexName: "GSI-2",
-        KeyConditionExpression: "gsi_pk = :pkey",
+        KeyConditionExpression: "topic = :pkey",
         ExpressionAttributeValues: {
-          ":pkey": "articleIndex"
+          ":pkey": topic
         },
         ScanIndexForward: order !== "desc"
       })
@@ -45,9 +45,9 @@ module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
       .query({
         TableName: "NcNewsTable",
         IndexName: "GSI-3",
-        KeyConditionExpression: "gsi_pk = :pkey",
+        KeyConditionExpression: "topic = :pkey",
         ExpressionAttributeValues: {
-          ":pkey": "articleIndex"
+          ":pkey": topic
         },
         ScanIndexForward: order !== "desc"
       })
@@ -57,8 +57,7 @@ module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
       .query({
         TableName: "NcNewsTable",
         IndexName: "GSI-4",
-        KeyConditionExpression:
-          "gsi_pk = :pkey and begins_with(gsi_4sk, :skey)",
+        KeyConditionExpression: "gsi_pk = :pkey and begins_with(gsi_sk, :skey)",
         ExpressionAttributeValues: {
           ":pkey": "articleIndex",
           ":skey": `${author}#`
