@@ -2,17 +2,10 @@
 //handlers for Comment query
 const getComments = require("./model/getComments");
 
-module.exports.getComments = async event => {
-  if (!event.queryStringParameters)
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        Message: "bad request"
-      })
-    };
+module.exports.sendComments = async event => {
   try {
-    const { author, article_id } = event.queryStringParameters;
-    const { Items } = await getComments({ author, article_id });
+    const { username, article_id } = event.pathParameters;
+    const { Items } = await getComments({ username, article_id });
     if (!Items[0])
       return {
         statusCode: 404,

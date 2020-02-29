@@ -1,7 +1,7 @@
 const { dbClincet } = require("../config");
 
-module.exports = ({ author, article_id }) => {
-  if (author)
+module.exports = ({ username, article_id }) => {
+  if (username)
     return dbClincet
       .query({
         TableName: "NcNewsTable",
@@ -9,12 +9,12 @@ module.exports = ({ author, article_id }) => {
         KeyConditionExpression: "gsi_pk = :pkey and begins_with(gsi_sk, :skey)",
         ExpressionAttributeValues: {
           ":pkey": "commentIndex",
-          ":skey": `${author}#`
+          ":skey": `${username}#`
         },
         ScanIndexForward: false
       })
       .promise();
-  else
+  else if (article_id)
     return dbClincet
       .query({
         TableName: "NcNewsTable",

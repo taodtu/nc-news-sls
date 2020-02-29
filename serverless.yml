@@ -63,10 +63,14 @@ functions:
           method: get
           cors: true
 
-  getComments:
-    handler: handlerComment.getComments
+  sendComments:
+    handler: handlerComment.sendComments
     events:
       - http:
-          path: /comments
+          path: /users/{username}/comments
+          method: get
+          cors: true
+      - http:
+          path: /articles/{article_id}/comments
           method: get
           cors: true
