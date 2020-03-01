@@ -1,6 +1,10 @@
 "use strict";
 //handlers for article query
-const { getAllArticles, getArticlesBy } = require("./model/getArticles");
+const {
+  getAllArticles,
+  getArticlesBy,
+  getArticleByID
+} = require("./model/getArticles");
 
 module.exports.getArticles = async event => {
   if (!event.queryStringParameters)
@@ -14,11 +18,11 @@ module.exports.getArticles = async event => {
   const { sort_by, author, topic, order } = event.queryStringParameters;
   if (!author && !topic)
     try {
-      const { Items } = await getAllArticles({ sort_by, order });
+      const result = await getAllArticles({ sort_by, order });
       return {
         statusCode: 200,
         body: JSON.stringify({
-          articles: Items
+          articles: result
         })
       };
     } catch (err) {
@@ -32,11 +36,11 @@ module.exports.getArticles = async event => {
     }
   else
     try {
-      const { Items } = await getArticlesBy({ sort_by, author, topic, order });
+      const result = await getArticlesBy({ sort_by, author, topic, order });
       return {
         statusCode: 200,
         body: JSON.stringify({
-          articles: Items
+          articles: result
         })
       };
     } catch (err) {
@@ -48,4 +52,34 @@ module.exports.getArticles = async event => {
         })
       };
     }
+};
+
+module.exports.getArticleByID = async event => {
+  if (!event.pathParameters)
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "bad request"
+      })
+    };
+
+  const { article_id } = event.pathParameters;
+
+  try {
+    const { Items } = await getArticleByID(article_id);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        article: Items[0]
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "get Article fails",
+        err
+      })
+    };
+  }
 };

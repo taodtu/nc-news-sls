@@ -10,7 +10,8 @@ module.exports.getAllArticles = ({ sort_by, order = "desc" }) => {
         ExpressionAttributeValues: {
           ":pkey": "articleIndex"
         },
-        ScanIndexForward: order !== "desc"
+        ScanIndexForward: order !== "desc",
+        Limit: 3
       })
       .promise();
   else
@@ -66,3 +67,14 @@ module.exports.getArticlesBy = ({ sort_by, author, topic, order = "desc" }) => {
       })
       .promise();
 };
+
+module.exports.getArticleByID = article_id =>
+  dbClincet
+    .query({
+      TableName: "NcNewsTable",
+      KeyConditionExpression: "pk = :pkey ",
+      ExpressionAttributeValues: {
+        ":pkey": article_id
+      }
+    })
+    .promise();
