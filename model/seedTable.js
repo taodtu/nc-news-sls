@@ -15,7 +15,7 @@ module.exports = async () => {
         resolve(data);
       });
     });
-  /*
+  // seed the topic and user data
   const paramsTopicAndUser = {
     RequestItems: {
       NcNewsTable: [
@@ -43,7 +43,7 @@ module.exports = async () => {
     ReturnConsumedCapacity: "TOTAL"
   };
 
-  await seedTablePromise(paramsTopicAndUser);*/
+  await seedTablePromise(paramsTopicAndUser);
   // batchWriteItem can wirte max 25 request so this array is divided
   const articleInput = articleData.reduce(
     (a, article, index) => {

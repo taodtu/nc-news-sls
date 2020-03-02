@@ -71,6 +71,14 @@ functions:
           method: get
           cors: true
 
+  patchArticle:
+    handler: handlerArticle.patchArticle
+    events:
+      - http:
+          path: /articles/{article_id}
+          method: patch
+          cors: true
+
   sendComments:
     handler: handlerComment.sendComments
     events:

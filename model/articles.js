@@ -1,4 +1,4 @@
-const { dbClincet } = require("../config");
+const { dbClincet, db } = require("../config");
 
 module.exports.getAllArticles = ({ sort_by, order = "desc" }) => {
   if (!sort_by)
@@ -78,3 +78,25 @@ module.exports.getArticleByID = article_id =>
       }
     })
     .promise();
+
+module.exports.updateArticleByID = (article_id, inc_votes, created_at) => {
+  const updateItem = params =>
+    new Promise((resolve, reject) => {
+      db.updateItem(params, (err, data) => {
+        if (err) return reject(err);
+        resolve(data);
+      });
+    });
+  console.log(article_id, inc_votes, created_at);
+  return updateItem({
+    TableName: "NcNewsTable",
+    Key: {
+      pk: { S: article_id },
+      sk: { S: created_at }
+    },
+    UpdateExpression: "set votes = votes + :val",
+    ExpressionAttributeValues: {
+      ":val": { N: `${inc_votes}` }
+    }
+  });
+};
