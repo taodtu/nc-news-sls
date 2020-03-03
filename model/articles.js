@@ -97,6 +97,7 @@ module.exports.updateArticleByID = (article_id, inc_votes, created_at) => {
     UpdateExpression: "set votes = votes + :val",
     ExpressionAttributeValues: {
       ":val": { N: `${inc_votes}` }
-    }
+    },
+    ReturnValues: "ALL_NEW"
   });
 };
