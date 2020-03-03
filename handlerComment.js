@@ -1,6 +1,6 @@
 "use strict";
 //handlers for Comment query
-const getComments = require("./model/getComments");
+const { getComments, updateComment } = require("./model/comments");
 
 module.exports.sendComments = async event => {
   try {
@@ -24,6 +24,37 @@ module.exports.sendComments = async event => {
       statusCode: 500,
       body: JSON.stringify({
         message: "get Comments fails",
+        err
+      })
+    };
+  }
+};
+
+module.exports.patchComment = async event => {
+  if (!(event.pathParameters && event.body))
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "bad request"
+      })
+    };
+
+  const { comment_id } = event.pathParameters;
+  const { inc_votes } = JSON.parse(event.body);
+
+  try {
+    const Items = await updateComment(comment_id, inc_votes);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        comment: Items
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "update Article fails",
         err
       })
     };

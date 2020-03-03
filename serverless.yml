@@ -90,3 +90,11 @@ functions:
           path: /articles/{article_id}/comments
           method: get
           cors: true
+
+  patchComment:
+    handler: handlerComment.patchComment
+    events:
+      - http:
+          path: /comments/{comment_id}
+          method: patch
+          cors: true

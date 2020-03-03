@@ -1,6 +1,6 @@
 const { dbClincet } = require("../config");
 
-module.exports = ({ username, article_id }) => {
+module.exports.getComments = ({ username, article_id }) => {
   if (username)
     return dbClincet
       .query({
@@ -28,4 +28,21 @@ module.exports = ({ username, article_id }) => {
         ScanIndexForward: false
       })
       .promise();
+};
+
+module.exports.updateComment = (created_at, inc_votes) => {
+  return dbClincet
+    .update({
+      TableName: "NcNewsTable",
+      Key: {
+        pk: "comment",
+        sk: created_at
+      },
+      UpdateExpression: "set votes = votes + :val",
+      ExpressionAttributeValues: {
+        ":val": inc_votes
+      },
+      ReturnValues: "ALL_NEW"
+    })
+    .promise();
 };

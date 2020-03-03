@@ -27,8 +27,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 3,
+          WriteCapacityUnits: 3
         }
       },
       {
@@ -41,8 +41,8 @@ module.exports = async () => {
           ProjectionType: "ALL"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 3,
+          WriteCapacityUnits: 3
         }
       },
       {
@@ -56,8 +56,8 @@ module.exports = async () => {
           ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 3,
+          WriteCapacityUnits: 3
         }
       },
       {
@@ -71,8 +71,8 @@ module.exports = async () => {
           ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 3,
+          WriteCapacityUnits: 3
         }
       },
       {
@@ -86,14 +86,14 @@ module.exports = async () => {
           ProjectionType: "INCLUDE"
         },
         ProvisionedThroughput: {
-          ReadCapacityUnits: 5,
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 3,
+          WriteCapacityUnits: 3
         }
       }
     ],
     ProvisionedThroughput: {
-      ReadCapacityUnits: 5,
-      WriteCapacityUnits: 5
+      ReadCapacityUnits: 3,
+      WriteCapacityUnits: 3
     }
   };
   const createTablePromise = params =>
