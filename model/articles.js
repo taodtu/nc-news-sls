@@ -80,24 +80,18 @@ module.exports.getArticleByID = article_id =>
     .promise();
 
 module.exports.updateArticleByID = (article_id, inc_votes, created_at) => {
-  const updateItem = params =>
-    new Promise((resolve, reject) => {
-      db.updateItem(params, (err, data) => {
-        if (err) return reject(err);
-        resolve(data);
-      });
-    });
-  console.log(article_id, inc_votes, created_at);
-  return updateItem({
-    TableName: "NcNewsTable",
-    Key: {
-      pk: { S: article_id },
-      sk: { S: created_at }
-    },
-    UpdateExpression: "set votes = votes + :val",
-    ExpressionAttributeValues: {
-      ":val": { N: `${inc_votes}` }
-    },
-    ReturnValues: "ALL_NEW"
-  });
+  return dbClincet
+    .update({
+      TableName: "NcNewsTable",
+      Key: {
+        pk: article_id,
+        sk: created_at
+      },
+      UpdateExpression: "set votes = votes + :val",
+      ExpressionAttributeValues: {
+        ":val": inc_votes
+      },
+      ReturnValues: "ALL_NEW"
+    })
+    .promise();
 };
