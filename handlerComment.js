@@ -60,3 +60,27 @@ module.exports.patchComment = async event => {
     };
   }
 };
+
+module.exports.postComment = async event => {
+  const { article_id } = event.pathParameters;
+  //const { inc_votes } = JSON.parse(event.body);
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      comment: article_id
+    })
+  };
+};
+
+module.exports.deleteComment = async event => {
+  const { comment_id } = event.pathParameters;
+  //const { inc_votes } = JSON.parse(event.body);
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      comment: comment_id
+    })
+  };
+};

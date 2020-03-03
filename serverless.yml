@@ -98,3 +98,19 @@ functions:
           path: /comments/{comment_id}
           method: patch
           cors: true
+
+  postComment:
+    handler: handlerComment.postComment
+    events:
+      - http:
+          path: /articles/{article_id}/comments
+          method: post
+          cors: true
+
+  deleteComment:
+    handler: handlerComment.deleteComment
+    events:
+      - http:
+          path: /comments/{comment_id}
+          method: delete
+          cors: true
