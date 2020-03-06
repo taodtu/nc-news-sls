@@ -15,29 +15,12 @@ provider:
 functions:
   seed:
     handler: handlerTable.seed
-    events:
-      - http:
-          path: /seed
-          method: post
-          cors: true
 
   dropTable:
     handler: handlerTable.dropTable
-    events:
-      - http:
-          path: /dropTable
-          method: delete
-          cors: true
-          private: true
 
   createTable:
     handler: handlerTable.createTable
-    events:
-      - http:
-          path: /createTable
-          method: post
-          cors: true
-          private: true
 
   getTopics:
     handler: handler.getTopics
