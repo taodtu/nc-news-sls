@@ -48,7 +48,6 @@ module.exports.updateComment = (created_at, inc_votes) => {
 };
 
 module.exports.putComment = (article_id, { username, body }, created_at) => {
-  console.log(created_at);
   return dbClincet
     .put({
       TableName: "NcNewsTable",
