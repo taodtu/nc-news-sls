@@ -46,3 +46,23 @@ module.exports.updateComment = (created_at, inc_votes) => {
     })
     .promise();
 };
+
+module.exports.putComment = (article_id, { username, body }, created_at) => {
+  console.log(created_at);
+  return dbClincet
+    .put({
+      TableName: "NcNewsTable",
+      Item: {
+        pk: "comment",
+        sk: created_at,
+        gsi_pk: "commentIndex",
+        gsi_sk: `${username}#${created_at}`,
+        gsi_2sk: `${article_id}#${created_at}`,
+        votes: 0,
+        body: body,
+        article_id: article_id,
+        author: username
+      }
+    })
+    .promise();
+};

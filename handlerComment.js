@@ -1,6 +1,6 @@
 "use strict";
 //handlers for Comment query
-const { getComments, updateComment } = require("./model/comments");
+const { getComments, updateComment, putComment } = require("./model/comments");
 
 module.exports.sendComments = async event => {
   try {
@@ -63,19 +63,41 @@ module.exports.patchComment = async event => {
 
 module.exports.postComment = async event => {
   const { article_id } = event.pathParameters;
-  //const { inc_votes } = JSON.parse(event.body);
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      comment: article_id
-    })
-  };
+  const body = JSON.parse(event.body);
+  try {
+    if (Object.keys(body).length > 2 || !body.username || !body.body)
+      return {
+        status: 400,
+        body: JSON.stringify({
+          message: "wrong input"
+        })
+      };
+    const created_at = new Date(Date.now()).toISOString();
+    await putComment(article_id, body, created_at);
+    return {
+      statusCode: 201,
+      body: JSON.stringify({
+        Comment: {
+          created_at,
+          article_id,
+          username: body.username,
+          body: body.body
+        }
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "update Article fails",
+        err
+      })
+    };
+  }
 };
 
 module.exports.deleteComment = async event => {
   const { comment_id } = event.pathParameters;
-  //const { inc_votes } = JSON.parse(event.body);
 
   return {
     statusCode: 200,
