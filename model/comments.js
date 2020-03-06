@@ -65,3 +65,14 @@ module.exports.putComment = (article_id, { username, body }, created_at) => {
     })
     .promise();
 };
+
+module.exports.deleteCommentByID = comment_id =>
+  dbClincet
+    .delete({
+      TableName: "NcNewsTable",
+      Key: {
+        pk: "comment",
+        sk: comment_id
+      }
+    })
+    .promise();
